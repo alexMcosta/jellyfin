@@ -6,5 +6,42 @@ version: "1.0"
 linter: qodana-dotnet
 profile:
   name: qodana.recommended
-include:
+# yaml-language-server: $schema=https://json.schemastore.org/qodana-1.0.json
+
+version: "1.0"
+
+# Pin this to the Qodana image actually certified by your CI environment.
+# This report targets the current Qodana 2026.2 configuration semantics.
+linter: jetbrains/qodana-dotnet:2026.2
+
+profile:
+  name: qodana.recommended
+
+inspections:
+  # Qodana vulnerability checker.
+  # The vulnerability-checker subsystem uses external vulnerability data and
+  # JetBrains documents that it sends hashed package names to a JetBrains server.
+  - inspection: VulnerableApi
+    enabled: false
+
+  # .NET dependency-vulnerability check belonging to the same external
+  # vulnerability-checker subsystem.
+  - inspection: RiderSecurityErrorsInspection
+    enabled: false
+
+  # Black-box hardening:
+  # Project-supplied Roslyn analyzers are executable extension code and therefore
+  # cannot be assumed network-safe. This intentionally sacrifices Roslyn analyzer
+  # coverage; JetBrains/Rider native inspections remain enabled.
+  - group: "category:C#/Roslyn Analyzers"
+    enabled: false
+
+exclude:
+  # Disables Qodana License Audit. Its inspection has a default-enabled
+  # "package search service" option, so leaving it enabled can require external
+  # dependency metadata.
   - name: CheckDependencyLicenses
+
+properties:
+  # Disable JetBrains/Qodana anonymous usage statistics.
+  idea.headless.enable.statistics: "false"

@@ -6,16 +6,6 @@ version: "1.0"
 linter: qodana-dotnet
 profile:
   name: qodana.recommended
-# yaml-language-server: $schema=https://json.schemastore.org/qodana-1.0.json
-
-version: "1.0"
-
-# Pin this to the Qodana image actually certified by your CI environment.
-# This report targets the current Qodana 2026.2 configuration semantics.
-linter: jetbrains/qodana-dotnet:2026.2
-
-profile:
-  name: qodana.recommended
 
 inspections:
   # Qodana vulnerability checker.

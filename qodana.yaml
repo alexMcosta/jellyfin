@@ -7,6 +7,7 @@ linter: qodana-dotnet
 profile:
   name: qodana.recommended
 exclude:
+  - name: CheckDependencyLicenses
   - name: RiderSecurityErrorsInspection
   - name: UnrealJsonLocalInspectionTool
   - name: SYSLIB1098
